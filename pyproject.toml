@@ -7,6 +7,9 @@ authors = ["Roman Okatev <43115066+Nebulawalker@users.noreply.github.com>"]
 [tool.poetry.dependencies]
 python = "^3.11"
 requests = "^2.28.1"
+beautifulsoup4 = "^4.11.1"
+lxml = "^4.9.2"
+pathvalidate = "^2.5.2"
 
 [tool.poetry.dev-dependencies]
 
