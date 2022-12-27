@@ -1,12 +1,16 @@
 import requests
+
 from bs4 import BeautifulSoup
+from urllib.parse import urljoin
 
-
-def parse_book_name_author(url, book_id):
-    book_description_url = f'{url}{book_id}'
-    response = requests.get(book_description_url)
-    response.raise_for_status()
-    soup = BeautifulSoup(response.text, 'lxml')
-    book_name, book_author = soup.find('h1').text.split('::')
-    return book_name.strip(), book_author.strip()
-
+class BookParser:
+    def __init__(self, url, book_id) -> None:
+        self.book_html_page = requests.get(f'{urljoin(url, f"b{book_id}")}')
+        self.book_html_page.raise_for_status
+        self.soup = BeautifulSoup(self.book_html_page.text, 'lxml')
+        self.book_title = self.soup.find('h1').text.split('::')[0].strip()
+        self.book_image_url = urljoin(
+            self.book_html_page.url,
+            self.soup.find('div', class_='bookimage').find('img')['src']
+        )
+    

@@ -1,6 +1,7 @@
 # Content
 /books
 *.txt
+/images
 
 .vscode
 .DS_store
