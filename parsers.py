@@ -26,6 +26,13 @@ class BookParser:
         for raw_comment in raw_comments:
             book_comments.append(raw_comment.find('span').text)
         return '\n'.join(book_comments)
+    
+    def get_book_genre(self):
+        raw_genres = self.soup.find('span', class_='d_book').find_all('a')
+        genres = []
+        for genre in raw_genres:
+            genres.append(genre.text)
+        return genres
 
 
 

@@ -12,7 +12,7 @@ def check_for_redirect(response):
 
 
 def main():
-    for index in range(1, 11):
+    for index in range(9, 10):
         payload = {'id': index}
         response = requests.get(TULULU_BOOK_DOWNLOAD_TXT_LINK, params=payload)
         response.raise_for_status()
@@ -31,6 +31,7 @@ def main():
         print(f'Заголовок: {book_description.get_book_title()}')
         print(book_description.get_book_cover_url())      
         print(book_description.get_book_comments())
+        print(book_description.get_book_genre())
 
 if __name__ == '__main__':
     main()
