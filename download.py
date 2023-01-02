@@ -6,8 +6,6 @@ from urllib.parse import urlsplit
 
 
 def check_for_redirect(response):
-    print(response.history)
-    print(response.status_code)
     if response.history:
         print('Page not found, redirecting')
         raise requests.exceptions.HTTPError

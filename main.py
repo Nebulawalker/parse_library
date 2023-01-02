@@ -35,7 +35,7 @@ def main():
                 f'{index}. {book_title}'
             )
         except requests.exceptions.HTTPError:
-            print(f'Книга с индексом {index}, не существует!')
+            print(f'Книга с индексом {index}, не существует!\n')
             continue
         book_description = get_book_description(TULULU_URL, index)
 
