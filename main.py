@@ -4,6 +4,9 @@ import time
 import sys
 from download import download_txt, download_image
 from parsers import get_book_description
+from custom_check import check_for_redirect
+from urllib.parse import urljoin
+
 
 TULULU_BOOK_DOWNLOAD_TXT_LINK = 'https://tululu.org/txt.php'
 TULULU_URL = 'https://tululu.org/'
@@ -27,15 +30,18 @@ def main():
 
     args = argparser.parse_args()
 
-    for index in range(args.start_id, args.end_id + 1):
-        payload = {'id': index}
+    for book_id in range(args.start_id, args.end_id + 1):
         try:
-            book_description = get_book_description(TULULU_URL, index)
+            book_url = f'{urljoin(TULULU_URL, f"b{book_id}")}/'
+            response = requests.get(book_url)
+            response.raise_for_status()
+            check_for_redirect(response)
+            book_description = get_book_description(response)
             book_title = book_description['book_title']
             download_txt(
                 TULULU_BOOK_DOWNLOAD_TXT_LINK,
-                payload,
-                f'{index}. {book_title}'
+                {'id': book_id},
+                f'{book_id}. {book_title}'
             )
             download_image(book_description["book_cover_url"])
         except requests.exceptions.HTTPError as error:
@@ -46,11 +52,6 @@ def main():
             print(error, file=sys.stderr)
             time.sleep(5)
             continue
-
-        print(f'Заголовок: {book_description["book_title"]}')
-        print(f'Жанр: {book_description["book_genre"]}')
-        print(f'Ссылка на обложку: {book_description["book_cover_url"]}')
-        print(f'Комментарии: \n{book_description["book_comments"]}\n')
 
 
 if __name__ == '__main__':

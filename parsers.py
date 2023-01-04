@@ -1,8 +1,5 @@
-import requests
-
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
-from custom_check import check_for_redirect
 
 
 def get_book_title(soup):
@@ -32,10 +29,7 @@ def get_book_genre(soup):
     return genres
 
 
-def get_book_description(url, book_id):
-    response = requests.get(f'{urljoin(url, f"b{book_id}")}/')
-    response.raise_for_status()
-    check_for_redirect(response)
+def get_book_description(response):
     soup = BeautifulSoup(response.text, 'lxml')
     return {
         'book_title': get_book_title(soup),
