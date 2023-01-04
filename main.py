@@ -3,7 +3,7 @@ import argparse
 import time
 import sys
 from download import download_txt, download_image
-from parsers import get_book_description, get_book_title
+from parsers import get_book_description
 
 TULULU_BOOK_DOWNLOAD_TXT_LINK = 'https://tululu.org/txt.php'
 TULULU_URL = 'https://tululu.org/'
@@ -30,13 +30,13 @@ def main():
     for index in range(args.start_id, args.end_id + 1):
         payload = {'id': index}
         try:
-            book_title = get_book_title(TULULU_URL, index)
+            book_description = get_book_description(TULULU_URL, index)
+            book_title = book_description['book_title']
             download_txt(
                 TULULU_BOOK_DOWNLOAD_TXT_LINK,
                 payload,
                 f'{index}. {book_title}'
             )
-            book_description = get_book_description(TULULU_URL, index)
             download_image(book_description["book_cover_url"])
         except requests.exceptions.HTTPError as error:
             print(error, file=sys.stderr)
