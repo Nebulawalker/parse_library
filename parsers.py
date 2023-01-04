@@ -7,6 +7,11 @@ def get_book_title(soup):
     return book_title
 
 
+def get_book_author(soup):
+    book_author = soup.find('h1').text.split('::')[1].strip()
+    return book_author
+
+
 def get_book_cover_url(response, soup):
     book_cover_url = urljoin(
         response.url,
@@ -33,6 +38,7 @@ def get_book_description(response):
     soup = BeautifulSoup(response.text, 'lxml')
     return {
         'book_title': get_book_title(soup),
+        'book_author': get_book_author(soup),
         'book_cover_url': get_book_cover_url(response, soup),
         'book_comments': get_book_comments(soup),
         'book_genre': get_book_genre(soup)
