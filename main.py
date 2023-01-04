@@ -1,5 +1,7 @@
 import requests
 import argparse
+import time
+import sys
 from download import download_txt, download_image
 from parsers import get_book_description, get_book_title
 
@@ -34,12 +36,16 @@ def main():
                 payload,
                 f'{index}. {book_title}'
             )
-        except requests.exceptions.HTTPError:
-            print(f'Книга с индексом {index}, не существует!\n')
+            book_description = get_book_description(TULULU_URL, index)
+            download_image(book_description["book_cover_url"])
+        except requests.exceptions.HTTPError as error:
+            print(error, file=sys.stderr)
             continue
-        book_description = get_book_description(TULULU_URL, index)
 
-        download_image(book_description["book_cover_url"])
+        except requests.exceptions.ConnectionError as error:
+            print(error, file=sys.stderr)
+            time.sleep(5)
+            continue
 
         print(f'Заголовок: {book_description["book_title"]}')
         print(f'Жанр: {book_description["book_genre"]}')
