@@ -1,4 +1,5 @@
 # Content
+*.json
 /books
 *.txt
 /images
