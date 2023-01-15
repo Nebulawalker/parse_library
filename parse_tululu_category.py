@@ -2,6 +2,7 @@ import requests
 import sys
 import time
 import json
+import argparse
 
 from urllib.parse import urlsplit
 from parsers import get_book_description, get_book_urls
@@ -11,7 +12,30 @@ from tululu_urls import TULULU_SCI_FI_URL, TULULU_BOOK_DOWNLOAD_TXT_LINK
 
 
 def main():
-    book_urls = get_book_urls(TULULU_SCI_FI_URL, 1, 2)
+    argparser = argparse.ArgumentParser(
+        description="Скрипт для скачивания книг \
+            из категории Sci-fi с сайта tululu.org."
+    )
+    argparser.add_argument(
+        '--start_page',
+        help='Номер страницы, \
+            с которой нужно начать скачивание (по умолчанию 1).',
+        default=1,
+        type=int)
+    argparser.add_argument(
+        '--end_page',
+        help='Номер страницы, \
+            где нужно завершить скачивание (по умолчанию 2).',
+        default=2,
+        type=int
+    )
+
+    args = argparser.parse_args()
+    book_urls = get_book_urls(
+        TULULU_SCI_FI_URL,
+        args.start_page,
+        args.end_page
+    )
     book_descriptions = []
     for book_url in book_urls:
         book_id = urlsplit(book_url).path.strip('/').strip('b')

@@ -52,7 +52,7 @@ def get_book_description(response):
 
 def get_book_urls(url, start_page, end_page):
     book_urls = []
-    for page in range(start_page, end_page):
+    for page in range(start_page, end_page + 1):
         try:
             response = requests.get(urljoin(url, str(page)))
             response.raise_for_status()
