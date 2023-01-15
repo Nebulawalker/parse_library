@@ -5,37 +5,36 @@ import time
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 from custom_check import check_for_redirect
-from main import TULULU_URL
+from tululu_urls import TULULU_URL
 
 
 def get_book_title(soup):
-    book_title = soup.find('h1').text.split('::')[0].strip()
+    book_title = soup.select_one('#content h1').text.split('::')[0].strip()
     return book_title
 
 
 def get_book_author(soup):
-    book_author = soup.find('h1').text.split('::')[1].strip()
+    book_author = soup.select_one('#content h1').text.split('::')[1].strip()
     return book_author
 
 
 def get_book_cover_url(response, soup):
     book_cover_url = urljoin(
         response.url,
-        soup.find('div', class_='bookimage').find('img')['src']
+        soup.select_one('#content img')['src']
     )
     return book_cover_url
 
 
 def get_book_comments(soup):
-    raw_comments = soup.find_all('div', class_='texts')
     book_comments = [
-        book_comment.find('span').text for book_comment in raw_comments
+        [comment.text for comment in soup.select('.texts span.black')]
     ]
     return book_comments
 
 
 def get_book_genre(soup):
-    raw_genres = soup.find('span', class_='d_book').find_all('a')
+    raw_genres = soup.select('span.d_book a')
     genres = [genre.text for genre in raw_genres]
     return genres
 
