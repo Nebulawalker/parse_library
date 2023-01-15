@@ -14,18 +14,37 @@
 poetry install
 ```
 
-4. Запуск приложения:
+4. Запуск __parse_tululu_book__:
 ```bash
-python main.py 
+python parse_tululu_book.py 
 ```
 По умолчанию, будут проверены и скачаны книги с id от 1 до 10. Можно изменить эти параметры.
 Например:
 ```bash
-python main.py --start_id 100 --end_id 200
+python parse_tululu_book.py --start_id 100 --end_id 200
 ```
 Будут проверены и скачаны книги с id от 100 до 200.
 
+5. Запуск __parse_tululu_category__ 
+```bash
+python parse_tululu_category.py 
+``` 
+Можно запускать с параметрами, описание ниже:
+```text
+Скрипт для скачивания книг из категории Sci-fi с сайта tululu.org.
 
+options:
+  -h, --help            show this help message and exit
+  --start_page START_PAGE
+                        Номер страницы, с которой нужно начать скачивание (по умолчанию 1).
+  --end_page END_PAGE   Номер страницы, где нужно завершить скачивание (по умолчанию 2).
+  --dest_folder DEST_FOLDER
+                        Каталог для сохранения книг(по умолчанию books).
+  --skip_imgs           Не скачивать изображения (по умолчанию скачивать).
+  --skip_txt            Не скачивать книги (по умолчанию скачивать).
+  --json_path JSON_PATH
+                        Путь к файлу JSON с описанием книг (default: books.json).
+```
 
 ### Цель проекта
 
