@@ -26,11 +26,33 @@ def main():
         '--end_page',
         help='Номер страницы, \
             где нужно завершить скачивание (по умолчанию 2).',
-        default=2,
+        default=1,
         type=int
     )
-
+    argparser.add_argument(
+        '--dest_folder',
+        help='Каталог для сохранения книг(по умолчанию books).',
+        default='books',
+        type=str
+    )
+    argparser.add_argument(
+        '--skip_imgs',
+        action='store_true',
+        help='Не скачивать изображения (по умолчанию скачивать).'
+    )
+    argparser.add_argument(
+        '--skip_txt',
+        action='store_true',
+        help='Не скачивать книги (по умолчанию скачивать).'
+    )
+    argparser.add_argument(
+        '--json_path',
+        help='Путь к файлу JSON с описанием книг (default: books.json).',
+        type=str,
+        default='books.json'
+    )
     args = argparser.parse_args()
+
     book_urls = get_book_urls(
         TULULU_SCI_FI_URL,
         args.start_page,
@@ -45,14 +67,21 @@ def main():
             check_for_redirect(response)
             book_description = get_book_description(response)
             book_title = book_description['book_title']
-            book_description['book_path'] = download_txt(
-                                                TULULU_BOOK_DOWNLOAD_TXT_LINK,
-                                                {'id': book_id},
-                                                f'{book_id}.{book_title}'
-                                            )
-            book_description['img_src'] = download_image(
-                book_description["book_cover_url"]
-            )
+            if not args.skip_txt:
+                book_description[
+                    'book_path'
+                ] = download_txt(
+                        TULULU_BOOK_DOWNLOAD_TXT_LINK,
+                        {'id': book_id},
+                        f'{book_id}.{book_title}',
+                        args.dest_folder
+                    )
+            if not args.skip_imgs:
+                book_description[
+                    'img_src'
+                ] = download_image(
+                    book_description["book_cover_url"]
+                    )
 
             book_descriptions.append(book_description)
         except requests.exceptions.HTTPError as err:
@@ -63,7 +92,7 @@ def main():
             time.sleep(5)
             continue
 
-    with open('books.json', "w", encoding="utf8") as file:
+    with open(args.json_path, "w", encoding="utf8") as file:
         json.dump(book_descriptions, file, ensure_ascii=False)
 
 

@@ -6,7 +6,7 @@ from urllib.parse import urlsplit
 from custom_check import check_for_redirect
 
 
-def download_txt(url, payload, filename, folder='books/'):
+def download_txt(url, payload, filename, folder='books'):
     """Функция для скачивания текстовых файлов.
     Args:
         url (str): Cсылка на текст, который хочется скачать.
