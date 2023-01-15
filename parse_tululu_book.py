@@ -7,10 +7,7 @@ from download import download_txt, download_image
 from parsers import get_book_description
 from custom_check import check_for_redirect
 from urllib.parse import urljoin
-
-
-TULULU_BOOK_DOWNLOAD_TXT_LINK = 'https://tululu.org/txt.php'
-TULULU_URL = 'https://tululu.org/'
+from tululu_urls import TULULU_URL, TULULU_BOOK_DOWNLOAD_TXT_LINK
 
 
 def main():
@@ -42,7 +39,7 @@ def main():
             download_txt(
                 TULULU_BOOK_DOWNLOAD_TXT_LINK,
                 {'id': book_id},
-                f'{book_id}. {book_title}'
+                f'{book_id}.{book_title}'
             )
             download_image(book_description["book_cover_url"])
         except requests.exceptions.HTTPError as error:

@@ -4,12 +4,10 @@ import time
 import json
 
 from urllib.parse import urlsplit
-from main import TULULU_BOOK_DOWNLOAD_TXT_LINK
 from parsers import get_book_description, get_book_urls
 from download import download_image, download_txt
 from custom_check import check_for_redirect
-
-TULULU_SCI_FI_URL = 'https://tululu.org/l55/'
+from tululu_urls import TULULU_SCI_FI_URL, TULULU_BOOK_DOWNLOAD_TXT_LINK
 
 
 def main():
@@ -26,7 +24,7 @@ def main():
             book_description['book_path'] = download_txt(
                                                 TULULU_BOOK_DOWNLOAD_TXT_LINK,
                                                 {'id': book_id},
-                                                f'{book_id}. {book_title}'
+                                                f'{book_id}.{book_title}'
                                             )
             book_description['img_src'] = download_image(
                 book_description["book_cover_url"]
