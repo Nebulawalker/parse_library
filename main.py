@@ -2,6 +2,7 @@ import requests
 import argparse
 import time
 import sys
+
 from download import download_txt, download_image
 from parsers import get_book_description
 from custom_check import check_for_redirect
