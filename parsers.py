@@ -33,7 +33,7 @@ def get_book_comments(soup):
     return book_comments
 
 
-def get_book_genre(soup):
+def get_book_genres(soup):
     raw_genres = soup.select('span.d_book a')
     genres = [genre.text for genre in raw_genres]
     return genres
@@ -46,7 +46,7 @@ def get_book_description(response):
         'book_author': get_book_author(soup),
         'book_cover_url': get_book_cover_url(response, soup),
         'book_comments': get_book_comments(soup),
-        'book_genre': get_book_genre(soup)
+        'book_genres': get_book_genres(soup)
     }
 
 
