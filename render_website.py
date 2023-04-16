@@ -1,4 +1,5 @@
 import json
+import os
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
@@ -15,17 +16,22 @@ def render_page():
 
     with open('books.json', 'r', encoding='utf-8') as file:
         books = json.load(file)
+
     template = env.get_template('template.html')
 
-    rendered_page = template.render(
-        books=list(chunked(books, 2))
-    )
+    for page, books_on_page in enumerate(list(chunked(books, 5))):
+        # pprint(page)
+        # pprint(books_on_page)
+        rendered_page = template.render(
+            books=list(chunked(books_on_page, 2))
+        )
 
-    with open('index.html', 'w', encoding="utf8") as file:
-        file.write(rendered_page)
-
+        with open(os.path.join('pages', f'index{page+1}.html'), 'w', encoding="utf-8") as file:
+            file.write(rendered_page)
+# render_page()
 
 if __name__ == '__main__':
+    os.makedirs('pages', exist_ok=True)
     render_page()
     server = Server()
     server.watch('template.html', render_page)
