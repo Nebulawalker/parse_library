@@ -5,7 +5,6 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from livereload import Server
 from more_itertools import chunked
-from pprint import pprint
 
 
 def render_page():
@@ -19,20 +18,25 @@ def render_page():
 
     template = env.get_template('template.html')
 
-    for page, books_on_page in enumerate(list(chunked(books, 5))):
-        # pprint(page)
-        # pprint(books_on_page)
+    chunked_books = list(chunked(books, 4))
+
+    for page, books_on_page in enumerate(chunked_books):
         rendered_page = template.render(
-            books=list(chunked(books_on_page, 2))
+            books=list(chunked(books_on_page, 2)),
+            current_page=page + 1,
+            total_pages=len(chunked_books)
         )
 
-        with open(os.path.join('pages', f'index{page+1}.html'), 'w', encoding="utf-8") as file:
+        with open(
+            os.path.join('pages', f'index{page+1}.html'),
+            'w', encoding="utf-8"
+        ) as file:
             file.write(rendered_page)
-# render_page()
+
 
 if __name__ == '__main__':
     os.makedirs('pages', exist_ok=True)
     render_page()
     server = Server()
     server.watch('template.html', render_page)
-    server.serve(root='.')
+    server.serve(root='.', default_filename='pages/index1.html')
