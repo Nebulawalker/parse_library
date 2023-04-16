@@ -1,4 +1,6 @@
+index.html
 # Content
+
 *.json
 /books
 *.txt
