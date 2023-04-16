@@ -1,11 +1,10 @@
-index.html
-/pages
+
 # Content
 
-*.json
-/books
-*.txt
-/images
+
+
+
+
 
 .vscode
 .DS_store
