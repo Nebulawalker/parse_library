@@ -1,6 +1,8 @@
-# Парсим онлайн-библиотеку
+# Домашняя оффлайн-библиотека
 
-Программа для скачивания книг и их описания с сайта https://tululu.org/.
+[![imageup.ru](https://imageup.ru/img210/4296800/snimok-ekrana-ot-2023-04-17-12-02-51.jpg)](https://imageup.ru/img210/4296800/snimok-ekrana-ot-2023-04-17-12-02-51.jpg.html)
+
+Программа для скачивания книг и их описания с https://tululu.org/. А также сайт для удобного просмотра скачанных книг без необходимости подключения к интернету.
 
 ## Как установить
 
@@ -45,6 +47,18 @@ options:
   --json_path JSON_PATH
                         Путь к файлу JSON с описанием книг (default: books.json).
 ```
+Для использования сайта не меняйте значения по умолчанию у следующих параметров:
+* --dest_folder
+* --json_path
+
+## Как запустить сайт
+1. Скачайте книги при помощи скрипта parse_tululu_category.py 
+2. Запустите скрипт render_website.py:
+   ```bash 
+   python render_website.py
+   ```
+3. Сайт будет доступен [тут. ](http://127.0.0.1:5500) Даже без интернета.
+4. Пример сайта также доступен на [GitHub Pages.](https://nebulawalker.github.io/parse_library/pages/index1.html)
 
 ### Цель проекта
 

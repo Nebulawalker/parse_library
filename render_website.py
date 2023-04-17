@@ -20,15 +20,15 @@ def render_page():
 
     chunked_books = list(chunked(books, 4))
 
-    for page, books_on_page in enumerate(chunked_books):
+    for page, books_on_page in enumerate(chunked_books, start=1):
         rendered_page = template.render(
             books=list(chunked(books_on_page, 2)),
-            current_page=page + 1,
+            current_page=page,
             total_pages=len(chunked_books)
         )
 
         with open(
-            os.path.join('pages', f'index{page+1}.html'),
+            os.path.join('pages', f'index{page}.html'),
             'w', encoding="utf-8"
         ) as file:
             file.write(rendered_page)
