@@ -10,13 +10,17 @@
 Инструмент для управления зависимостями __Poetry__.
 .
 1. Склонировать репозиторий.
+   
 2. Создать виртуальное окружение.
 3. Установить зависимости:
 ```
 poetry install
 ```
+## Самый простой способ запустить библиотеку
+После скачивания библиотеки, нужно зайти в папку 'pages' и открыть в браузере файл 'index1.html'.
 
-4. Запуск __parse_tululu_book__:
+## Описание скриптов
+### Запуск __parse_tululu_book__:
 ```bash
 python parse_tululu_book.py 
 ```
@@ -27,7 +31,7 @@ python parse_tululu_book.py --start_id 100 --end_id 200
 ```
 Будут проверены и скачаны книги с id от 100 до 200.
 
-5. Запуск __parse_tululu_category__ 
+### Запуск __parse_tululu_category__ 
 ```bash
 python parse_tululu_category.py 
 ``` 
@@ -51,14 +55,25 @@ options:
 * --dest_folder
 * --json_path
 
-## Как запустить сайт
+### Запуск __render_website.py__
 1. Скачайте книги при помощи скрипта parse_tululu_category.py 
 2. Запустите скрипт render_website.py:
    ```bash 
    python render_website.py
    ```
-3. Сайт будет доступен [тут. ](http://127.0.0.1:5500) Даже без интернета.
-4. Пример сайта также доступен на [GitHub Pages.](https://nebulawalker.github.io/parse_library/pages/index1.html)
+3.
+```text
+usage: render_website.py [-h] [--json_path JSON_PATH]
+
+Скрипт для запуска сайта с домашней библиотекой
+
+options:
+  -h, --help            show this help message and exit
+  --json_path JSON_PATH
+                        Путь к файлу JSON с описанием книг (default: books.json).
+```
+4. Сайт будет доступен [тут. ](http://127.0.0.1:5500) Даже без интернета.
+5. Пример сайта также доступен на [GitHub Pages.](https://nebulawalker.github.io/parse_library/pages/index1.html)
 
 ### Цель проекта
 
