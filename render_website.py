@@ -1,9 +1,23 @@
 import json
 import os
+import argparse
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from livereload import Server
 from more_itertools import chunked
+
+
+def get_json_path():
+    argparser = argparse.ArgumentParser(
+            description='Скрипт для запуска сайта с домашней библиотекой'
+    )
+    argparser.add_argument(
+            '--json_path',
+            help='Путь к файлу JSON с описанием книг (default: books.json).',
+            type=str,
+            default='books.json'
+        )
+    return argparser.parse_args()
 
 
 def render_page():
@@ -13,7 +27,8 @@ def render_page():
     )
     template = env.get_template('template.html')
 
-    with open('books.json', 'r', encoding='utf-8') as file:
+    json_path = get_json_path()
+    with open(json_path, 'r', encoding='utf-8') as file:
         books = json.load(file)
     chunked_books = list(chunked(books, 4))
 
