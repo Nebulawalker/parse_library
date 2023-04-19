@@ -7,6 +7,10 @@ from livereload import Server
 from more_itertools import chunked
 
 
+BOOK_DESCRIPTIONS_ON_PAGE = 4
+COLUMN_COUNT = 2
+
+
 def get_json_path():
     argparser = argparse.ArgumentParser(
             description='Скрипт для запуска сайта с домашней библиотекой'
@@ -30,7 +34,9 @@ def render_page():
     json_path = get_json_path().json_path
     with open(json_path, 'r', encoding='utf-8') as file:
         book_descriptions = json.load(file)
-    book_descriptions_by_pages = list(chunked(book_descriptions, 4))
+    book_descriptions_by_pages = list(
+        chunked(book_descriptions, BOOK_DESCRIPTIONS_ON_PAGE)
+    )
 
     for page, book_descriptions_on_page in enumerate(
         book_descriptions_by_pages,
@@ -38,7 +44,7 @@ def render_page():
     ):
         rendered_page = template.render(
             book_descriptions_on_page_sorted=list(
-                chunked(book_descriptions_on_page, 2)
+                chunked(book_descriptions_on_page, COLUMN_COUNT)
             ),
             current_page=page,
             total_pages=len(book_descriptions_by_pages)
