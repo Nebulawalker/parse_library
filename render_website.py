@@ -27,16 +27,21 @@ def render_page():
     )
     template = env.get_template('template.html')
 
-    json_path = get_json_path()
+    json_path = get_json_path().json_path
     with open(json_path, 'r', encoding='utf-8') as file:
-        books = json.load(file)
-    chunked_books = list(chunked(books, 4))
+        book_descriptions = json.load(file)
+    book_descriptions_by_pages = list(chunked(book_descriptions, 4))
 
-    for page, books_on_page in enumerate(chunked_books, start=1):
+    for page, book_descriptions_on_page in enumerate(
+        book_descriptions_by_pages,
+        start=1
+    ):
         rendered_page = template.render(
-            books=list(chunked(books_on_page, 2)),
+            book_descriptions_on_page_sorted=list(
+                chunked(book_descriptions_on_page, 2)
+            ),
             current_page=page,
-            total_pages=len(chunked_books)
+            total_pages=len(book_descriptions_by_pages)
         )
         with open(
             os.path.join('pages', f'index{page}.html'),
