@@ -9,6 +9,7 @@ from parsers import get_book_description, get_book_urls
 from download import download_image, download_txt
 from custom_check import check_for_redirect
 from tululu_urls import TULULU_SCI_FI_URL, TULULU_BOOK_DOWNLOAD_TXT_LINK
+from defaults import DEFAULT_BOOKS_FOLDER
 
 
 def main():
@@ -31,8 +32,9 @@ def main():
     )
     argparser.add_argument(
         '--dest_folder',
-        help='Каталог для сохранения книг(по умолчанию books).',
-        default='books',
+        help=f'Каталог для сохранения книг\
+            (по умолчанию {DEFAULT_BOOKS_FOLDER}).',
+        default=DEFAULT_BOOKS_FOLDER,
         type=str
     )
     argparser.add_argument(

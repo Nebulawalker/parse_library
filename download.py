@@ -4,9 +4,10 @@ import os
 from pathvalidate import sanitize_filename
 from urllib.parse import urlsplit
 from custom_check import check_for_redirect
+from defaults import DEFAULT_BOOKS_FOLDER, DEFAULT_IMAGES_FOLDER
 
 
-def download_txt(url, payload, filename, folder='books'):
+def download_txt(url, payload, filename, folder=DEFAULT_BOOKS_FOLDER):
     """Функция для скачивания текстовых файлов.
     Args:
         url (str): Cсылка на текст, который хочется скачать.
@@ -25,7 +26,7 @@ def download_txt(url, payload, filename, folder='books'):
     return filepath
 
 
-def download_image(url, folder='images/'):
+def download_image(url, folder=DEFAULT_IMAGES_FOLDER):
     response = requests.get(url)
     response.raise_for_status()
     check_for_redirect(response)
