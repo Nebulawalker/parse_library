@@ -11,12 +11,10 @@ def render_page():
         loader=FileSystemLoader('.'),
         autoescape=select_autoescape(['html', 'xml'])
     )
+    template = env.get_template('template.html')
 
     with open('books.json', 'r', encoding='utf-8') as file:
         books = json.load(file)
-
-    template = env.get_template('template.html')
-
     chunked_books = list(chunked(books, 4))
 
     for page, books_on_page in enumerate(chunked_books, start=1):
@@ -25,7 +23,6 @@ def render_page():
             current_page=page,
             total_pages=len(chunked_books)
         )
-
         with open(
             os.path.join('pages', f'index{page}.html'),
             'w', encoding="utf-8"
